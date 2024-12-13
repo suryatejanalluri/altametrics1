@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Define the User model
+model User {
+  id       Int      @id @default(autoincrement())  // Auto-incrementing primary key
+  email    String   @unique  // Email is unique for each user
+  password String   // Store user password
+  name     String   // User's full name
+  invoices Invoice[] // Relation to invoices, one-to-many (a user can have multiple invoices)
+}
+
+// Define the Invoice model
+model Invoice {
+  id          Int      @id @default(autoincrement())  // Auto-incrementing primary key
+  vendor_name String   // Name of the vendor
+  amount      Float    // Amount on the invoice
+  due_date    DateTime // Due date of the invoice
+  description String   // Description of the invoice
+  user_id     Int      // Foreign key to associate the invoice with a user
+  paid        Boolean  // Whether the invoice is paid or not
+  
+  // Define the relation between Invoice and User (one-to-many)
+  User        User     @relation(fields: [user_id], references: [id])
+}
+

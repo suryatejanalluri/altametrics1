@@ -1,0 +1,126 @@
+/* InvoiceList.css */
+
+/* General styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+  }
+  
+  /* Container for the Invoice List */
+  div {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #4b6cb7;
+    margin-bottom: 30px;
+  }
+  
+  /* Invoice List styling */
+  ul {
+    list-style-type: none;
+  }
+  
+  li {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  li:hover {
+    background-color: #f0f4f8;
+  }
+  
+  li span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  li .amount {
+    font-size: 1rem;
+    color: #00aaff;
+    font-weight: normal;
+  }
+  
+  /* Modal Styles */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.5rem;
+    color: #4b6cb7;
+  }
+  
+  .close-btn {
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+  
+  .close-btn:hover {
+    color: #ff5e5e;
+  }
+  
+  .modal-body {
+    padding-top: 15px;
+  }
+  
+  .modal-body p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .modal-body strong {
+    font-weight: bold;
+    color: #4b6cb7;
+  }
+  

@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres       # Username for PostgreSQL
+      POSTGRES_PASSWORD: password   # Password for PostgreSQL
+      POSTGRES_DB: invoicedb        # Name of the database to create
+    ports:
+      - "5432:5432"                 # Exposes port 5432 on localhost for accessing PostgreSQL
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persists data across container restarts
+
+  # backend:
+  #   build: ./backend  # Assuming your NestJS app is in the 'backend' folder
+  #   environment:
+  #     DATABASE_URL: "postgresql://postgres:password@db:5432/invoicedb"  # Database connection string
+  #   depends_on:
+  #     - db  # Ensure the database is up before starting the backend
+  #   ports:
+  #     - "3000:3000"  # Exposes your NestJS backend on port 3000 (adjust if needed)
+
+volumes:
+  postgres_data:
+    driver: local

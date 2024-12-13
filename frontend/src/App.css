@@ -1,0 +1,200 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* App Layout */
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header Styling */
+header {
+  background-color: #4caf50; /* Primary color */
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Main Content Area */
+main {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Link Styling */
+a {
+  color: #4caf50;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Button Styling */
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Form Elements */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1rem;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #4caf50;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  padding: 15px;
+}
+
+.sidebar a {
+  color: white;
+  display: block;
+  padding: 10px 0;
+}
+
+.sidebar a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .App {
+    flex-direction: column;
+  }
+
+  header {
+    font-size: 1.2rem;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+}
