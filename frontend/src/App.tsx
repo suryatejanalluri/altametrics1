@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import InvoiceList from './components/InvoiceList';
-import Login from './Login';
+import Login from './components/Login';
 import Main from './components/Main';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
