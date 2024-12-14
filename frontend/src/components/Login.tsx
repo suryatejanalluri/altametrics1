@@ -31,7 +31,7 @@ const Login: React.FC = () => {
       dispatch(login({ email, token: response.data.token }));
       localStorage.setItem('token', response.data.token); // Optional
 
-      navigate('/main'); // Redirect to invoices page
+      navigate('/main'); // Redirect to main dashboard
     } catch (err) {
       setError('Invalid email or password');
     }

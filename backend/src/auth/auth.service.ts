@@ -25,8 +25,8 @@ export class AuthService {
     const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload, {
-        secret: process.env.JWT_SECRET, // You should store this secret in .env
-        expiresIn: '20s', // Token expires in 1 hour
+        secret: process.env.JWT_SECRET || 'your-fallback-secret-key',
+        expiresIn: '10m', // Token expires in 10 minutesr
       })
       //this.jwtService.sign(payload),
     };

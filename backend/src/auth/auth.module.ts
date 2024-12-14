@@ -7,7 +7,13 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { UsersModule } from '../users/users.module'; // Import Users module
 
 @Module({
-  imports: [JwtModule.register({ secret: 'your-secret-key', signOptions: { expiresIn: '60m' } }), UsersModule],  // JwtModule and UsersModule
+  imports: [
+    JwtModule.register({ 
+      secret: process.env.JWT_SECRET || 'your-fallback-secret-key',
+      signOptions: { expiresIn: '10m' }
+    }),
+    UsersModule
+  ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, JwtAuthGuard],
 })

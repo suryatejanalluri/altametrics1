@@ -1,73 +1,91 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { invoiceResponseSchema } from '../validation/invoiceSchema'; // Import the updated schema
+import { invoiceResponseSchema } from '../validation/invoiceSchema';
 import Modal from './Modal';
 import { useDispatch } from 'react-redux';
 import { setInvoices } from '../redux/invoiceSlice';
 import '../styles/InvoiceList.css';
 
+interface Invoice {
+  vendor_name: string;
+  amount: number;
+  due_date: string;
+  description: string;
+  paid: boolean;
+  user_id: string;
+}
 
 const InvoiceList: React.FC = () => {
-  const [selectedInvoice, setSelectedInvoice] = React.useState<null | any>(null);
-  const [page, setPage] = React.useState(1); // State for current page
-  const limit = 10; // Number of items per page
+  const [selectedInvoice, setSelectedInvoice] = React.useState<Invoice | null>(null);
+  const [page, setPage] = React.useState(1);
+  const limit = 10;
 
-  // Fetch invoices using React Query and passing page and limit
   const { data: invoices, error, isLoading } = useQuery(
     ['invoices', page],
     async () => {
       const response = await axios.get('http://localhost:3000/invoices', {
-        params: { page, limit }, // Pass page and limit for pagination
+        params: { page, limit },
       });
-      return response.data; // Return the full response (including invoices)
+      return response.data;
     }
   );
 
-  // Validate the fetched data using the updated Zod schema
   let validatedInvoices = invoices;
 
   if (invoices) {
     try {
-      validatedInvoices = invoiceResponseSchema.parse(invoices); // Validate entire response
+      validatedInvoices = invoiceResponseSchema.parse(invoices);
     } catch (err) {
       console.error('Invalid data:', err);
       return <div>Error: Invalid invoice data</div>;
     }
   }
 
-  // Redux dispatch to store validated invoices
   const dispatch = useDispatch();
   if (validatedInvoices) {
-    dispatch(setInvoices(validatedInvoices.invoices)); // Store only the invoices array in Redux
+    dispatch(setInvoices(validatedInvoices.invoices));
   }
 
-  // Error handling for React Query
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error fetching invoices: {error.message}</div>;
 
-  // Pagination controls
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
   const handlePreviousPage = () => {
-    setPage((prevPage) => Math.max(prevPage - 1, 1)); // Prevent going below page 1
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
+  const formatAmount = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(amount);
+  };
+
+  const startIndex = (page - 1) * limit;
+
   return (
-    <div>
+    <div className="invoice-list-container">
       <h1>Invoices</h1>
-      <ul>
-        {validatedInvoices.invoices?.map((invoice: any) => (
-          <li key={invoice.id} onClick={() => setSelectedInvoice(invoice)}>
-            {invoice.vendor_name} - ${invoice.amount}
+      <ul className="invoice-list">
+        {validatedInvoices.invoices?.map((invoice: Invoice, index: number) => (
+          <li key={invoice.user_id} onClick={() => setSelectedInvoice(invoice)}>
+            <div className="invoice-item">
+              <span className="invoice-number">{startIndex + index + 1}.</span>
+              <span className="vendor-name">{invoice.vendor_name}</span>
+              <span className="amount">{formatAmount(invoice.amount)}</span>
+              <span className={`status-badge ${invoice.paid ? 'status-paid' : 'status-pending'}`}>
+                {invoice.paid ? 'Paid' : 'Pending'}
+              </span>
+            </div>
           </li>
         ))}
       </ul>
 
-      {/* Pagination controls */}
-      <div>
+      <div className="pagination">
         <button onClick={handlePreviousPage} disabled={page === 1}>
           Previous
         </button>
@@ -76,7 +94,6 @@ const InvoiceList: React.FC = () => {
         </button>
       </div>
 
-      {/* Modal for displaying selected invoice */}
       {selectedInvoice && (
         <Modal invoice={selectedInvoice} onClose={() => setSelectedInvoice(null)} />
       )}
@@ -85,4 +102,3 @@ const InvoiceList: React.FC = () => {
 };
 
 export default InvoiceList;
-
