@@ -80,3 +80,5 @@ The local host port will be diplayed in the terminal/cmd/powershell.
 
 
 
+Login to the web application using the following credentials: 
+email: 'user1@example.com', password: 'password123'
