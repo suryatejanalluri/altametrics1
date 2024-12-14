@@ -76,7 +76,7 @@ Finally, start the frontend server:
 ```bash
 npm run dev
 ```
-By default, the application is hosted in http://localhost:5143
+The local host port will be diplayed in the terminal/cmd/powershell.
 
 
 
