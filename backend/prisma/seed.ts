@@ -15,17 +15,27 @@ import * as bcrypt from 'bcryptjs';  // Import bcrypt for password hashing
       // Hash the plain-text password before storing it
       const hashedPassword = await bcrypt.hash(user.password, 10);  // 10 is the salt rounds
   
-      // Create the user with the hashed password
-      const createdUser = await prisma.user.create({
-        data: {
+      // Upsert the user (create if not exists, update if exists)
+      const createdUser = await prisma.user.upsert({
+        where: { email: user.email },
+        update: {
+          password: hashedPassword,
+          name: user.name,
+        },
+        create: {
           email: user.email,
-          password: hashedPassword,  // Store the hashed password
+          password: hashedPassword,
           name: user.name,
         },
       });
-      console.log(`User created: ${createdUser.email}`);
+      console.log(`User upserted: ${createdUser.email}`);
   
-      // Seed invoices for the user (directly after user creation)
+      // Delete existing invoices for this user
+      await prisma.invoice.deleteMany({
+        where: { user_id: createdUser.id },
+      });
+  
+      // Create new invoices for the user
       await prisma.invoice.createMany({
         data: [
           {
@@ -60,4 +70,3 @@ import * as bcrypt from 'bcryptjs';  // Import bcrypt for password hashing
     .finally(async () => {
       await prisma.$disconnect();
     });
-  
