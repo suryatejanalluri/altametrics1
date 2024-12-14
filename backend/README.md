@@ -4,7 +4,7 @@
 This is the backend for the Invoice Management System. It provides APIs for authentication, invoice management, and pagination. The backend is built using **NestJS**, **Prisma ORM**, and **PostgreSQL**.
 
 ## Prerequisites
-- **Node.js** (v16 or higher)
+- **Node.js** (v18.18 or higher)
 - **npm** (v7 or higher)
 - **Docker** and **Docker Compose**
 

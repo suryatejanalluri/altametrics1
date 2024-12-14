@@ -1,35 +1,82 @@
 
-# General Notes
-Before Running with Docker Compose
-Ensure that the Docker service is running on your system:
+## Prerequisites
+ **Node.js** (v18.18 or higher)
+ **npm**
+ **Docker** and **Docker Compose**
+- Ensure that the Docker service is running on your system:
+  **Windows/Mac: Launch Docker Desktop and ensure it is active.**
+  **Linux: Run sudo systemctl start docker to start the Docker service if it is not already running.**
 
-Windows/Mac: Launch Docker Desktop and ensure it is active.
-Linux: Run sudo systemctl start docker to start the Docker service if it is not already running.
-Ensure that node with version atleast 20 is installed in the system.
+We are using Prisma in this project, and Prisma is supported from versions starting 18.18
+First check the version of node using the following command
+```bash
+node --version
+```
+The project is built using 20.12.2 version, Ideally it works without  compatibility issues when node version is 20.
+You can get the latest version of node from the official installer at this link: https://nodejs.org/en/download/prebuilt-installer
+
+After ensuring node version is above 18.18, Move to altametrics1 folder:
 
 
+```bash
+cd <your-project-folder>/altametrics1
+```
+## Setup Instructions
+
+### 1. Build the PostGreSQL database using Docker
 ## Running with Docker Compose
 To run the database and backend services using Docker Compose:
 ```bash
 docker-compose up --build
 ```
+The above command builds up a PostGreSQL database.
 
-After starting the backend, manually run the following in the `backend` directory:
+### 2. Download the required node dependencies for Nest.js and backend server
+
+Next, navigate to the backend folder and do an npm install to 
 ```bash
-npx prisma migrate dev --name init
-npx tsx prisma/seed.ts
-npm start run
+cd <your-project-folder>/atlametrics1/backend
+npm install
 ```
 
-Then navigate to the `frontend` directory and start the frontend server:
+### 3. Initialize Prisma
+After installing all the dependencies in package.json file through the above command, run the following commands
+``` bash
+npx prisma migrate dev --name init
+npx tsx prisma/seed.ts
+```
+
+You can check the database and tables in any db client like HeidiSQL or DBeaver.
+The authentication details are in the docker-compose.yml file, which are as follows:
+      POSTGRES_USER: postgres       # Username for PostgreSQL
+      POSTGRES_PASSWORD: password   # Password for PostgreSQL
+      POSTGRES_DB: invoicedb 
+
+Inside the database, go to public and then tables and you will find the User and Invoice Tables
+
+### 4. Run the Backend Server
+Finally, run the backend app while in the backend folder using the following command
+```bash
+cd <your-project-folder>/atlametrics1/backend
+npm start run
+
+```
+### 5. Download the required node dependencies for the frontend web application
+
+Now, switch to frontend directory navigate to the `frontend` directory 
+```bash
+cd <your-project-folder>/atlametrics1/frontend
+```
+Install the required dependencies using the following command
+```bash
+npm install
+```
+### 6. Run the Web Application
+Finally, start the frontend server:
 ```bash
 npm run dev
 ```
+By default, the application is hosted in http://localhost:5143
 
-Alternately you can open Git Bash and navigate to the root folder and run the automatic script which does all the above steps in one-go:
-But before that check the permissions on the file run.sh and change their permission to include execute permission to everyone using any command like chmod + x run.sh or something that works on your OS.
-Later, run the following command.
-```bash
-./run.sh
-```
+
 

@@ -1,7 +1,7 @@
 # Frontend README
 
 ## Description
-This is the frontend for the Invoice Management System. It is built using **React** with **TypeScript**, **Redux Toolkit**, and **React Query**. The frontend consumes APIs exposed by the backend to manage authentication and invoices.
+This is the frontend for the Invoice Management System. It is built using **React** with **TypeScript**, **React Context** for authentication, **Redux** for invoice state management, and **React Query** for data fetching. The frontend consumes APIs exposed by the backend to manage authentication and invoices.
 
 ## Prerequisites
 - **Node.js** (v16 or higher)
@@ -21,18 +21,41 @@ npm run dev
 ```
 This starts the frontend server at `http://localhost:5173`.
 
-
 ## Features
-- **Authentication**: Login functionality using JWT tokens
+- **Authentication**: 
+  - Login functionality using JWT tokens
+  - Token expiration handling
+  - Protected routes
 - **Invoice Management**:
   - List invoices with pagination
   - View detailed invoice information in a modal
-- **Error Handling**: Displays error messages for failed API requests
+  - Real-time data fetching with React Query
+  - Global state management with Redux
+- **Error Handling**: 
+  - Displays user-friendly error messages
+  - Form validation
+  - API error handling
 
 ## Project Structure
-- **Components**: Contains reusable React components (e.g., `InvoiceList`, `Modal`)
-- **Redux**: Manages application state using Redux Toolkit
-- **Validation**: Uses Zod for schema-based validation
+- **src/**
+  - **components/**: Reusable React components
+    - `Login.tsx`: Authentication component
+    - `InvoiceList.tsx`: Invoice management
+    - `Modal.tsx`: Reusable modal component
+    - `Header.tsx`: Navigation header
+  - **context/**
+    - `AuthContext.tsx`: Authentication state management
+  - **redux/**
+    - `store.ts`: Redux store configuration
+    - `invoiceSlice.ts`: Invoice state management
+  - **styles/**: CSS modules for styling
+  - **validation/**: Zod schemas for data validation
+  - **utils/**: Helper functions and utilities
+
+## State Management
+- **Authentication**: Managed through React Context (AuthContext)
+- **Invoice Data**: Managed through Redux store
+- **Server State**: Handled by React Query for efficient caching and real-time updates
 
 ## Additional Commands
 - **Linting**:
@@ -44,4 +67,8 @@ This starts the frontend server at `http://localhost:5173`.
   npm run build
   ```
 
-
+## Security Features
+- JWT token-based authentication
+- Protected routes requiring authentication
+- Automatic token expiration handling
+- Secure password handling
