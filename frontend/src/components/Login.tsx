@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { login } from '../redux/userSlice'; // Import login action
 import { useNavigate } from 'react-router-dom';
-import {isTokenExpired} from '../utils/authUtils'; 
+import { useAuth } from '../context/AuthContext';
+import '../styles/Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,49 +19,48 @@ const Login: React.FC = () => {
         email,
         password,
       });
-      console.log("response", response)
-      const token = response.data.access_token;
-      
-      // Check token expiration
-      if (isTokenExpired(token)) {
-        setError('Token has expired. Please log in again.');
-        return;
-      }
-      // Save user info in Redux or localStorage
-      dispatch(login({ email, token: response.data.token }));
-      localStorage.setItem('token', response.data.token); // Optional
 
-      navigate('/main'); // Redirect to main dashboard
-    } catch (err) {
-      setError('Invalid email or password');
+      const { access_token } = response.data;
+      if (access_token) {
+        login(access_token);
+        navigate('/main');
+      } else {
+        setError('Invalid response from server');
+      }
+    } catch (error) {
+      setError('Invalid credentials. Please try again.');
     }
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
-      </form>
+    <div className="login-container">
+      <div className="login-box">
+        <h1>Login</h1>
+        <form onSubmit={handleLogin}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="login-button">Login</button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -40,11 +40,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!token) return;
 
     try {
+      // Check if token is in correct JWT format (has two dots)
+      if (!token.includes('.') || token.split('.').length !== 3) {
+        console.error('Invalid token format');
+        logout();
+        return;
+      }
+
       const [, base64Url] = token.split('.');
+      if (!base64Url) {
+        console.error('Invalid token structure');
+        logout();
+        return;
+      }
+
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       const payload = JSON.parse(window.atob(base64));
-      const expirationTime = payload.exp * 1000; // Convert to milliseconds
       
+      if (!payload.exp) {
+        console.error('Token missing expiration');
+        logout();
+        return;
+      }
+
+      const expirationTime = payload.exp * 1000; // Convert to milliseconds
       const timeUntilExpiry = expirationTime - Date.now();
       console.log('Token will expire in:', timeUntilExpiry/1000, 'seconds');
       
