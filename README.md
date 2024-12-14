@@ -2,10 +2,10 @@
 ## Prerequisites
  **Node.js** (v18.18 or higher)
  **npm**
- **Docker** and **Docker Compose**
+ **Docker**
 - Ensure that the Docker service is running on your system:
-  **Windows/Mac: Launch Docker Desktop and ensure it is active.**
-  **Linux: Run sudo systemctl start docker to start the Docker service if it is not already running.**
+  Windows/Mac: Launch Docker Desktop and ensure it is active.
+  Linux: Run sudo systemctl start docker to start the Docker service if it is not already running.
 
 We are using Prisma in this project, and Prisma is supported from versions starting 18.18
 First check the version of node using the following command
